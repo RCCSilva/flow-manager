@@ -7,5 +7,6 @@ CREATE TABLE PUBLIC.HANDLERS(
 -- Insert values to have it available for local testing
 INSERT INTO PUBLIC.HANDLERS(NAME, TOPIC)
     VALUES
+        ('Get Users By Attributes', 'flow-manager.users.get-by-attribute'),
         ('Filter users', 'flow-manager.filter'),
         ('Send Email', 'flow-manager.send-email');

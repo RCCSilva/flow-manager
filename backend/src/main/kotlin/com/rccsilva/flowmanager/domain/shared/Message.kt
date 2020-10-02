@@ -4,27 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 
 data class Message(
     val payload: Payload,
-    val topics: List<String>,
-    var topicIndex: Int = 0
+    val topicNode: TopicNode?
 ) {
     val hasNext: Boolean
         @JsonIgnore
-        get() = topicIndex < topics.size - 1
+        get() = topicNode?.next?.isNotEmpty() ?: false
 
-    fun currentTopic(): String {
-        if (topicIndex >= topics.size) {
-            throw IllegalArgumentException("Message does not have another topic")
+    val currentTopic: String?
+        @JsonIgnore
+        get() = topicNode?.value
+
+    fun buildNextMessages(payload: Payload): List<Message>? {
+        return topicNode?.next?.map { node ->
+            Message(payload, node)
         }
-        return topics[topicIndex]
-    }
-
-    fun nextTopic(): String {
-        if (!hasNext) {
-            throw IllegalArgumentException("Message does not have another topic")
-        }
-
-        topicIndex += 1
-
-        return this.currentTopic()
     }
 }

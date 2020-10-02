@@ -1,6 +1,7 @@
 package com.rccsilva.flowmanager.domain.flowmanager.entities
 
 import com.rccsilva.flowmanager.domain.shared.Payload
+import com.rccsilva.flowmanager.domain.shared.TopicNode
 import com.vladmihalcea.hibernate.type.array.ListArrayType
 import org.hibernate.annotations.Parameter
 import org.hibernate.annotations.Type
@@ -21,9 +22,9 @@ data class Flow(
     @Column(name = "name")
     val name: String,
 
-    @Type(type = "list-array")
-    @Column(name = "topics", columnDefinition = "varchar[128][]")
-    val topics: List<String>,
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
+    val topicNode: TopicNode,
 
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")

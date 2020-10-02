@@ -3,6 +3,7 @@ package com.rccsilva.flowmanager.domain.handlers
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.rccsilva.flowmanager.domain.handlers.interfaces.IHandler
+import com.rccsilva.flowmanager.domain.handlers.publishers.SendToNextPublisher
 import com.rccsilva.flowmanager.domain.shared.Message
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
@@ -20,9 +21,12 @@ class SendEmailHandler(
         logger.info("Received message to send-email: $payload")
         try {
             val message = objectMapper.readValue<Message>(payload)
-            sendToNextPublisher.send(message)
+            val newPayload = processMessage(message)
+            sendToNextPublisher.send(newPayload, message)
         } catch (e: Exception) {
             logger.error("Failed to process message to send-email", e)
         }
     }
+
+    private fun processMessage(message: Message) = message.payload
 }
