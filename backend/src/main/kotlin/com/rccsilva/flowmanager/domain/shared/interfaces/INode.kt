@@ -2,5 +2,5 @@ package com.rccsilva.flowmanager.domain.shared.interfaces
 
 interface INode<T>{
     val value: T
-    val next: Set<INode<T>>
+    val children: List<INode<T>>
 }

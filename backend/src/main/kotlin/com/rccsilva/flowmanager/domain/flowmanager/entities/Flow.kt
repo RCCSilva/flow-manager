@@ -28,5 +28,5 @@ data class Flow(
 
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
-    val payload: Payload
+    val payload: Payload? = null
 )

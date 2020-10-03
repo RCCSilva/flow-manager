@@ -1,23 +1,23 @@
 package com.rccsilva.flowmanager.domain.flowmanager.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.rccsilva.flowmanager.domain.flowmanager.entities.Flow
-import com.rccsilva.flowmanager.domain.flowmanager.entity.FlowRepository
-import com.rccsilva.flowmanager.domain.flowmanager.entity.HandlerRepository
+import com.rccsilva.flowmanager.domain.flowmanager.entities.request.FlowRequest
+import com.rccsilva.flowmanager.domain.flowmanager.repositories.FlowRepository
+import com.rccsilva.flowmanager.domain.flowmanager.repositories.HandlerRepository
+import com.rccsilva.flowmanager.domain.flowmanager.services.FlowBuildService
 import com.rccsilva.flowmanager.domain.shared.Message
-import com.rccsilva.flowmanager.domain.shared.Payload
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.ResponseEntity
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 @RequestMapping("api/v1/flow-manager")
 class FlowManagerController(
     private val flowRepository: FlowRepository,
     private val handlerRepository: HandlerRepository,
+    private val flowBuildService: FlowBuildService,
     private val kafkaTemplate: KafkaTemplate<String, String>,
     private val objectMapper: ObjectMapper
 ) {
@@ -25,15 +25,17 @@ class FlowManagerController(
     @GetMapping("handlers")
     fun getHandlers() = ResponseEntity.ok(handlerRepository.findAll().toList())
 
-    @GetMapping("{flowId}")
+    @GetMapping("flow/{flowId}")
     fun getFlow(@PathVariable flowId: Int): ResponseEntity<Flow> {
         val flow = flowRepository.findByIdOrNull(flowId)
             ?: throw IllegalArgumentException("Flow with $flowId id not found")
         return ResponseEntity.ok(flow)
     }
 
-    @PostMapping
-    fun create(@RequestBody flow: Flow): ResponseEntity<Flow> {
+    @PostMapping("flow")
+    fun create(@RequestBody flowRequest: FlowRequest): ResponseEntity<Flow> {
+
+        val flow = flowBuildService.create(flowRequest)
 
         val message = Message(
             payload = flow.payload,

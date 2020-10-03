@@ -14,7 +14,7 @@ class SendToNextPublisher(
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    fun send(payload: Payload, message: Message) {
+    fun send(payload: Payload?, message: Message) {
         if (!message.hasNext) {
             return
         }

@@ -2,5 +2,5 @@ CREATE TABLE PUBLIC.FLOWS(
     ID          SERIAL          PRIMARY KEY,
     NAME        VARCHAR(128)    NOT NULL,
     TOPIC_NODE  JSONB           NOT NULL,
-    PAYLOAD     JSONB           NOT NULL
+    PAYLOAD     JSONB
 );
