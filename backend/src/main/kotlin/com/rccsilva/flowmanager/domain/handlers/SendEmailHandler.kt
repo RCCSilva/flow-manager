@@ -2,6 +2,8 @@ package com.rccsilva.flowmanager.domain.handlers
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.rccsilva.flowmanager.domain.flowmanager.entities.FlowLog
+import com.rccsilva.flowmanager.domain.flowmanager.repositories.FlowLogRepository
 import com.rccsilva.flowmanager.domain.handlers.interfaces.IHandler
 import com.rccsilva.flowmanager.domain.handlers.publishers.SendToNextPublisher
 import com.rccsilva.flowmanager.domain.shared.Message
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service
 @Service
 class SendEmailHandler(
     private val sendToNextPublisher: SendToNextPublisher,
+    private val flowLogRepository: FlowLogRepository,
     private val objectMapper: ObjectMapper
 ): IHandler {
     private val logger = LoggerFactory.getLogger(this::class.java)

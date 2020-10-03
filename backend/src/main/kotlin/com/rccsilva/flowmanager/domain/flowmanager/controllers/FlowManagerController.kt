@@ -39,7 +39,7 @@ class FlowManagerController(
 
         val message = Message(
             payload = flow.payload,
-            topicNode = flow.topicNode
+            handlerNode = flow.handlerNode
         )
 
         message.currentTopic?.let { topic ->

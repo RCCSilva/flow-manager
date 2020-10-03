@@ -49,10 +49,10 @@ class FlowBuildServiceTests {
 
         // Assert
         assertThat(flow.name).isEqualTo("Hello")
-        assertThat(flow.topicNode.value).isEqualTo("topic1")
-        assertThat(flow.topicNode.children.size).isEqualTo(1)
-        assertThat(flow.topicNode.children[0].value).isEqualTo("topic2")
-        assertThat(flow.topicNode.children[0].children.size).isEqualTo(0)
+        assertThat(flow.handlerNode.topic).isEqualTo("topic1")
+        assertThat(flow.handlerNode.children.size).isEqualTo(1)
+        assertThat(flow.handlerNode.children[0].topic).isEqualTo("topic2")
+        assertThat(flow.handlerNode.children[0].children.size).isEqualTo(0)
     }
 
 
@@ -107,22 +107,22 @@ class FlowBuildServiceTests {
         // Assert
         assertThat(flow.name).isEqualTo("Hello")
         // Depth 1
-        assertThat(flow.topicNode.value).isEqualTo("topic1")
-        assertThat(flow.topicNode.children.size).isEqualTo(3)
+        assertThat(flow.handlerNode.topic).isEqualTo("topic1")
+        assertThat(flow.handlerNode.children.size).isEqualTo(3)
 
         // Depth 2
-        assertThat(flow.topicNode.children[0].value).isEqualTo("topic2")
-        assertThat(flow.topicNode.children[0].children.size).isEqualTo(1)
-        assertThat(flow.topicNode.children[1].value).isEqualTo("topic3")
-        assertThat(flow.topicNode.children[1].children.size).isEqualTo(0)
-        assertThat(flow.topicNode.children[2].value).isEqualTo("topic4")
-        assertThat(flow.topicNode.children[2].children.size).isEqualTo(1)
+        assertThat(flow.handlerNode.children[0].topic).isEqualTo("topic2")
+        assertThat(flow.handlerNode.children[0].children.size).isEqualTo(1)
+        assertThat(flow.handlerNode.children[1].topic).isEqualTo("topic3")
+        assertThat(flow.handlerNode.children[1].children.size).isEqualTo(0)
+        assertThat(flow.handlerNode.children[2].topic).isEqualTo("topic4")
+        assertThat(flow.handlerNode.children[2].children.size).isEqualTo(1)
 
         // Depth 3
-        assertThat(flow.topicNode.children[0].children[0].value).isEqualTo("topic5")
-        assertThat(flow.topicNode.children[0].children[0].children.size).isEqualTo(0)
+        assertThat(flow.handlerNode.children[0].children[0].topic).isEqualTo("topic5")
+        assertThat(flow.handlerNode.children[0].children[0].children.size).isEqualTo(0)
 
-        assertThat(flow.topicNode.children[2].children[0].value).isEqualTo("topic6")
-        assertThat(flow.topicNode.children[2].children[0].children.size).isEqualTo(0)
+        assertThat(flow.handlerNode.children[2].children[0].topic).isEqualTo("topic6")
+        assertThat(flow.handlerNode.children[2].children[0].children.size).isEqualTo(0)
     }
 }

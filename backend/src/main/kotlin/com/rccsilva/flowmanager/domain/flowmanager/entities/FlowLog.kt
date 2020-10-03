@@ -9,18 +9,16 @@ import javax.persistence.*
 @Entity
 @Table(name = "flow_logs")
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType::class)
-data class FlowLogs(
+data class FlowLog(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @ManyToOne
-    @JoinColumn(name = "flow_id")
-    val flow: Flow,
+    @Column(name = "flow_id")
+    val flowId: Int,
 
-    @ManyToOne
-    @JoinColumn(name = "handler_id")
-    val handler: Handler,
+    @Column(name = "handler_id")
+    val handlerId: Int,
 
     @Enumerated(EnumType.STRING)
     val status: FlowLoggingStatus,

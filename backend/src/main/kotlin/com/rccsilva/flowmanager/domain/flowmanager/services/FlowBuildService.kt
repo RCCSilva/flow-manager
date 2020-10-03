@@ -4,7 +4,7 @@ import com.rccsilva.flowmanager.domain.flowmanager.entities.Flow
 import com.rccsilva.flowmanager.domain.flowmanager.entities.request.FlowRequest
 import com.rccsilva.flowmanager.domain.flowmanager.entities.request.HandlerRequest
 import com.rccsilva.flowmanager.domain.flowmanager.repositories.HandlerRepository
-import com.rccsilva.flowmanager.domain.shared.TopicNode
+import com.rccsilva.flowmanager.domain.shared.HandlerNode
 import org.springframework.stereotype.Service
 
 @Service
@@ -22,19 +22,19 @@ class FlowBuildService(
                 ?: throw IllegalArgumentException("Handler with $id id does not have a topic mapped")
         }
 
-        return Flow(name = flowRequest.name, topicNode = topicNode)
+        return Flow(name = flowRequest.name, handlerNode = topicNode)
     }
 
     private fun runner(
         handlerRequest: HandlerRequest,
         getTopic: (Int?) -> String
-    ): TopicNode {
+    ): HandlerNode {
         if (handlerRequest.children.isEmpty()) {
-            return TopicNode(getTopic(handlerRequest.id), emptyList())
+            return HandlerNode(getTopic(handlerRequest.id), handlerRequest.id, emptyList())
         }
 
         val children = handlerRequest.children.map { runner(it, getTopic) }
 
-        return TopicNode(getTopic(handlerRequest.id), children)
+        return HandlerNode(getTopic(handlerRequest.id), handlerRequest.id, children)
     }
 }

@@ -1,9 +1,8 @@
 package com.rccsilva.flowmanager.domain.flowmanager.entities
 
 import com.rccsilva.flowmanager.domain.shared.Payload
-import com.rccsilva.flowmanager.domain.shared.TopicNode
+import com.rccsilva.flowmanager.domain.shared.HandlerNode
 import com.vladmihalcea.hibernate.type.array.ListArrayType
-import org.hibernate.annotations.Parameter
 import org.hibernate.annotations.Type
 import org.hibernate.annotations.TypeDef
 import javax.persistence.*
@@ -24,7 +23,7 @@ data class Flow(
 
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
-    val topicNode: TopicNode,
+    val handlerNode: HandlerNode,
 
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
